@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>bQuo</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <style>
+      .valid {
+        color: green;
+        border: red 1px solid;
+      }
+
+      .invalid {
+        color: red;
+        border: 1px solid blue;
+      }
+
+      .mt5 {
+        margin-top: 5em;
+      }
+
+      .branding {
+        font-weight: bold;
+        padding: 20px;
+      }
+
+      .branding--byline {
+        font-weight: normal;
+      }
+
+      .quote__box {
+        border: 1px solid #eee;
+        background: #f4f4f4;
+        padding: 15px;
+        margin: 15px 0;
+      }
+
+      .quote__text {
+        font-size: 2em;
+      }
+
+      .quote__author {
+
+      }
+
+      .quote__category {
+
+      }
+
+      .toast__style {
+        background-color: #26a69a;
+      }
+
+    </style>
+  </head>
+  <body ng-controller="mainCtrl">
+    <div class="branding">
+      <span>bQuo</span>
+      <br>
+      <span class="branding--byline">representing your favorite authors</span>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col s8 mt5">
+          <h2>Submit Quote</h2>
+          <form id="quoteSubmit" ng-submit="addQuote(quote)">
+
+            <input class="validate"
+            required=""
+            aria-required="true"
+            type="text"
+            ng-model="quote.text"
+            placeholder="enter quote text">
+
+            <input class="validate"
+            required=""
+            aria-required="true"
+            type="text"
+            ng-model="quote.author"
+            placeholder="enter author">
+
+            <input class="validate"
+            type="date"
+            required=""
+            aria-required="true"
+            ng-model="quote.date">
+
+            <input class="validate"
+            type="text"
+            required=""
+            aria-required="true"
+            type="text'"
+            ng-model="quote.category"
+            placeholder="enter quote category">
+
+            <input type="submit"
+            class="btn"
+            value="Submit">
+
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <a href="#" class="btn" ng-click="getQuotes()">
+            View Quotes
+          </a>
+        </div>
+      </div>
+
+      <div class="row ng-cloak" ng-if="resultsFlag == true">
+        <div class="col s12">
+          <div class="quote__box" ng-repeat="result in quoteResults">
+            <p class="quote__text" ng-if="result.text">"{{result.text}}" -- {{result.author}}</p>
+            <p class="quote__text" ng-if="result.quote">"{{result.quote}}" -- {{result.author}}</p>
+            <!-- <p></p> -->
+            <p>Category: {{result.category}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+
+    <script src="./app.js" charset="utf-8"></script>
+    <script src="./mainCtrl.js" charset="utf-8"></script>
+    <script src="./mainSrv.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.quoteSubmit').click(function(){
+          console.log('hi');
+          $.ajax({
+            url:"/quotes",
+            type: "GET",
+            success: function(res){
+              console.log(res)
+            }
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

@@ -12,10 +12,10 @@ exports.list_all_quotes = (req,res) => {
 };
 
 exports.add_a_quote = (req, res) => {
-  console.log('req body here -- ', req);
+  console.log('req body here -- ', req.body);
   var new_quote = new Quote(req.body);
   new_quote.save((err, quote) => {
-    console.log('quote here:: ', quote);
+    // console.log('quote here:: ', quote);
     if (err)
       res.send(err);
     res.json(quote);
